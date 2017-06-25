@@ -4,8 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/communication-android.iml" filepath="$PROJECT_DIR$/communication-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/communication-android.iml" filepath="$PROJECT_DIR$/communication-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/communication-android.iml" filepath="$PROJECT_DIR$/communication-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jsontask/jsontask.iml" filepath="$PROJECT_DIR$/jsontask/jsontask.iml" />
       <module fileurl="file://$PROJECT_DIR$/jsontask/jsontask.iml" filepath="$PROJECT_DIR$/jsontask/jsontask.iml" />
       <module fileurl="file://$PROJECT_DIR$/jsontask/jsontask.iml" filepath="$PROJECT_DIR$/jsontask/jsontask.iml" />
     </modules>
