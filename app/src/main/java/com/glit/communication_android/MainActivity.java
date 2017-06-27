@@ -3,6 +3,7 @@ package com.glit.communication_android;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void processFinish(String output) {
+                textView.setText(output);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void progressUpdate(Integer... values) {
                 progressDialog.setMessage("Downloading");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setIndeterminate(false);
@@ -30,15 +37,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void progressUpdate(Integer... values) {
-                textView.setText(output);
-                progressDialog.dismiss();
-            }
-
-            @Override
             public void preExecute() {
 
             }
-        }
+        };
+
+        buttonTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetJsonTask gjt = new GetJsonTask("http://pin.qpim.net/api/android/main_pole_layer/midsouth/midsouth/poles2017",
+                        response, "test", "test");
+                gjt.execute();
+            }
+        });
     }
 }
