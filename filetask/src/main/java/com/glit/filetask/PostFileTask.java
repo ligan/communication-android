@@ -18,7 +18,7 @@ import java.net.URL;
  * Created by Gan on 7/4/2017.
  */
 
-public class PostFileTask extends AsyncTask<String, String, String> {
+public class PostFileTask extends AsyncTask<String, Integer, String> {
     private String mUrlString = "";
     private String mFilePath = "";
     private String mFileName = "";
@@ -133,4 +133,20 @@ public class PostFileTask extends AsyncTask<String, String, String> {
 
         return sb.toString();
     }
+
+    @Override
+    protected void onPreExecute() {
+        mDelegate.preExecute();
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        mDelegate.processFinish(result);
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        mDelegate.progressUpdate(values);
+    }
+
 }
