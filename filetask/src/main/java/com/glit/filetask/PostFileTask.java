@@ -1,6 +1,7 @@
 package com.glit.filetask;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -18,6 +19,29 @@ import java.net.URL;
  */
 
 public class PostFileTask extends AsyncTask<String, String, String> {
+    private String mUrlString = "";
+    private String mFilePath = "";
+    private String mFileName = "";
+    private String mBasicAuth = "";
+
+    public interface AsyncResponse {
+        void processFinish(String output);
+        void progressUpdate(Integer... values);
+        void preExecute();
+    }
+
+    public AsyncResponse mDelegate = null;
+
+    public PostFileTask(AsyncResponse delegate, String... auth) {
+        if(auth.length == 2) {
+            String a = auth[0] + ":" + auth[1];
+            mBasicAuth = "Basic " + Base64.encodeToString(a.getBytes(), Base64.NO_WRAP);
+        } else {
+            mBasicAuth = "";
+        }
+        mDelegate = delegate;
+    }
+
     @Override
     protected String doInBackground(String... params) {
         FileInputStream fileInputStream = null;
@@ -28,9 +52,9 @@ public class PostFileTask extends AsyncTask<String, String, String> {
         String boundary = "*****";
         StringBuffer sb = null;
 
-        String urlServer = params[0];
-        String filePath = params[1];
-        String filename = params[2];
+        mUrlString = params[0];
+        mFilePath = params[1];
+        mFileName = params[2];
         String line = "";
         String inputLine = "";
         HttpURLConnection connection = null;
@@ -42,7 +66,7 @@ public class PostFileTask extends AsyncTask<String, String, String> {
         int maxBufferSize = 1*1024*1024;
 
         try {
-            URL url = new URL(urlServer);
+            URL url = new URL(mUrlString);
             connection = (HttpURLConnection)url.openConnection();
 
             // Allow Input & Outputs
@@ -59,10 +83,10 @@ public class PostFileTask extends AsyncTask<String, String, String> {
 
             // Post file
             outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"" + filename + "\"" + lineEnd);
+            outputStream.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"" + mFileName + "\"" + lineEnd);
             outputStream.writeBytes(lineEnd);
 
-            fileInputStream = new FileInputStream(new File(filePath + filename));
+            fileInputStream = new FileInputStream(new File(mFilePath + mFileName));
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);

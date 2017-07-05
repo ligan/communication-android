@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.glit.jsontask.GetJsonTask;
 import com.glit.filetask.PostFileTask;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -52,7 +54,25 @@ public class MainActivity extends AppCompatActivity {
                         response, "test", "test");
                 gjt.execute();
                 */
-                PostFileTask pft = new PostFileTask();
+                PostFileTask.AsyncResponse response = new PostFileTask.AsyncResponse() {
+                    @Override
+                    public void processFinish(String output) {
+                        File uploaded = new File("/storage/sdcard/com.glit.inspection/midsouth.zip");
+                        uploaded.delete();
+                    }
+
+                    @Override
+                    public void progressUpdate(Integer... values) {
+
+                    }
+
+                    @Override
+                    public void preExecute() {
+
+                    }
+                };
+
+                PostFileTask pft = new PostFileTask(response);
                 pft.execute("http://pin.qpim.net/api/android/backup", "/storage/sdcard/com.glit.inspection/", "midsouth.zip");
             }
         });
