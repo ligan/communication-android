@@ -1,4 +1,4 @@
-package com.glit.jsontask;
+package com.glit.filetask;
 
 import android.os.AsyncTask;
 import android.util.Base64;

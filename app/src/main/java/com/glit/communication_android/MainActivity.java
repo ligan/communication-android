@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.glit.jsontask.GetJsonTask;
+import com.glit.filetask.PostFileTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,9 +46,14 @@ public class MainActivity extends AppCompatActivity {
         buttonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 GetJsonTask gjt = new GetJsonTask("http://pin.qpim.net/api/android/main_pole_layer/midsouth/midsouth/poles2017",
+
                         response, "test", "test");
                 gjt.execute();
+                */
+                PostFileTask pft = new PostFileTask();
+                pft.execute("http://pin.qpim.net/api/android/backup", "/storage/sdcard/com.glit.inspection/", "midsouth.zip");
             }
         });
     }

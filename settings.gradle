@@ -1,1 +1,1 @@
-include ':app', ':jsontask'
+include ':app', ':jsontask', ':filetask'
