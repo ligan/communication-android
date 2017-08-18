@@ -7,10 +7,10 @@
     tools:context="com.glit.communication_android.MainActivity">
 
     <TextView
-        android:id="@+id/textview"
+        android:id="@+id/text_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Test results display here."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,5 +23,13 @@
         android:text="Button"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="113dp" />
+
+    <Button
+        android:id="@+id/button_post_files"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Post Files"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="172dp" />
 
 </android.support.constraint.ConstraintLayout>

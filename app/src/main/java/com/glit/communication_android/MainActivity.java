@@ -1,12 +1,14 @@
 package com.glit.communication_android;
 
 import android.app.ProgressDialog;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.glit.filetask.PostMultipleFilesTask;
 import com.glit.jsontask.GetJsonTask;
 import com.glit.filetask.PostFileTask;
 
@@ -20,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button buttonTest = (Button)findViewById(R.id.button_test);
-        final TextView textView = (TextView)findViewById(R.id.textview);
+        Button buttonPostFiles = (Button)findViewById(R.id.button_post_files);
+
+        final TextView textView = (TextView)findViewById(R.id.text_result);
 
         final GetJsonTask.AsyncResponse response = new GetJsonTask.AsyncResponse() {
             ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
@@ -44,6 +48,40 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+
+        buttonPostFiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostMultipleFilesTask.AsyncResponse response = new PostMultipleFilesTask.AsyncResponse() {
+                    ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+
+                    @Override
+                    public void onPostExecute(String output) {
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onProgressUpdate(Integer... values) {
+                        String message = String.format("Uploaded %d  files", values[0]);
+                        progressDialog.setMessage(message);
+                    }
+
+                    @Override
+                    public void onPreExecute() {
+                        String message = String.format("Preparing for uploading");
+                        progressDialog.setMessage(message);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.setIndeterminate(false);
+                        progressDialog.show();
+                    }
+                };
+
+                File folder = new File(Environment.getExternalStorageDirectory() + "/com.glit.inspection/aepgl_cc/images/");
+                File[] files = folder.listFiles();
+                PostMultipleFilesTask task = new PostMultipleFilesTask(response, files);
+                task.execute("http://192.168.2.77:4990/api/android/image/upload/aepgl_cc");
+            }
+        });
 
         buttonTest.setOnClickListener(new View.OnClickListener() {
             @Override
