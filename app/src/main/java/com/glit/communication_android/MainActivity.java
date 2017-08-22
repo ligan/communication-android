@@ -61,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onProgressUpdate(Integer... values) {
-                        String message = String.format("Uploaded %d  files", values[0]);
+                    public void onProgressUpdate(String... values) {
+                        String message = String.format("Uploaded %s of %s files",
+                                values[1],
+                                values[2]);
                         progressDialog.setMessage(message);
                     }
 

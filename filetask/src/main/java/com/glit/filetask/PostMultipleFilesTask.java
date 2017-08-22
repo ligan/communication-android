@@ -18,7 +18,7 @@ import java.net.URL;
  * Created by baracouta on 8/15/2017.
  */
 
-public class PostMultipleFilesTask extends AsyncTask<String, Integer, String> {
+public class PostMultipleFilesTask extends AsyncTask<String, String, String> {
     private String mUrlString = "";
     private String mFilePath = "";
     private String mFileName = "";
@@ -27,7 +27,7 @@ public class PostMultipleFilesTask extends AsyncTask<String, Integer, String> {
 
     public interface AsyncResponse {
         void onPostExecute(String output);
-        void onProgressUpdate(Integer... values);
+        void onProgressUpdate(String... values);
         void onPreExecute();
     }
 
@@ -123,7 +123,9 @@ public class PostMultipleFilesTask extends AsyncTask<String, Integer, String> {
                 is.close();
                 br.close();
 
-                publishProgress(i, mFiles.length);
+                publishProgress(mFiles[i].getPath() + mFiles[i].getName(),
+                        String.format("%d", i),
+                        String.format("%d", mFiles[i].length()));
             }
 
         }catch(MalformedURLException e) {
@@ -146,7 +148,7 @@ public class PostMultipleFilesTask extends AsyncTask<String, Integer, String> {
     }
 
     @Override
-    protected void onProgressUpdate(Integer... values) {
+    protected void onProgressUpdate(String... values) {
         mDelegate.onProgressUpdate(values);
     }
 }
