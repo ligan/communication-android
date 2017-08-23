@@ -125,7 +125,7 @@ public class PostMultipleFilesTask extends AsyncTask<String, String, String> {
 
                 publishProgress(mFiles[i].getPath() + mFiles[i].getName(),
                         String.format("%d", i),
-                        String.format("%d", mFiles[i].length()));
+                        String.format("%d", mFiles.length));
             }
 
         }catch(MalformedURLException e) {
